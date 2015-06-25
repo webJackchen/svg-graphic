@@ -32,4 +32,4 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data:[{x:"周一",y:14},{x:"周二",y:15},{x:"周三",y:1500},{x:"周四",y:76},{x:"周五",y:3500},{x:"周六",y:30},{x:"周天",y:42},{x:"周六",y:30},{x:"周天",y:42},{x:"周六",y:30},{x:"周天",y:42}]</br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});</br>
 
-#####具体效果，请看demo
+#####具体效果，请看http://webjackchen.github.io/svg-graphic/
