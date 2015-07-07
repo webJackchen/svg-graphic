@@ -126,6 +126,8 @@
                 var posY = this.getAttribute("cy");
                 var posX = this.getAttribute("cx");
                 var dataY = this.getAttribute("dataY");
+                this.previousElementSibling.setAttribute("r",8);
+                this.previousElementSibling.setAttribute("stroke","rgba(134,137,140,0.5)");
 
                 oMaskPrompt.style.top = posY + "px";
                 oMaskPrompt.style.left = posX + "px";
@@ -140,6 +142,8 @@
                 var posY = this.getAttribute("cy");
                 var posX = this.getAttribute("cx");
                 var dataY = this.getAttribute("dataY");
+                this.previousElementSibling.setAttribute("stroke","rgba(134,137,140,0.5)");
+                this.previousElementSibling.setAttribute("r",8);
 
                 oMaskPrompt.style.top = posY + "px";
                 oMaskPrompt.style.left = posX + "px";
@@ -149,12 +153,16 @@
             oCircleArr[i].onmouseleave = function(){
                 var oSvg = this.parentNode;
                 var oMaskPrompt = oSvg.previousElementSibling;
+                this.previousElementSibling.setAttribute("r",5);
+                this.previousElementSibling.setAttribute("stroke","#86898c");
                 oMaskPrompt.style.display = "none";
             }
             oCircleArr[i].touchend = function(ev){
                 var ev = ev.changedTouches[0];
                 var oSvg = this.parentNode;
                 var oMaskPrompt = oSvg.previousElementSibling;
+                this.previousElementSibling.setAttribute("r",5);
+                this.previousElementSibling.setAttribute("stroke","#86898c");
                 oMaskPrompt.style.display = "none";
             }
         }
