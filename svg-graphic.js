@@ -1,11 +1,10 @@
 //====================================================================================================
 // [插件名称] svg制作折线统计图组件
 //----------------------------------------------------------------------------------------------------
-// [描    述] 调用简单，配置简单，样式更灵活，更轻量级，整体原生开发，速度更快，优点：更小更快。兼容各
-//            大主流浏览器,IE8及以下不支持。
+// [描    述] 调用简单，配置简单，样式更灵活，更轻量级，整体原生开发，速度更快，优点：更小更快。
 //----------------------------------------------------------------------------------------------------
-// [作者网名] webjackchen（阿飞）
-// [邮    箱] webjackchen@163.com
+// [作者网名] webkackchen（阿飞）
+// [邮    箱] webkackchen@163.com
 // [QQ交流] 602071930
 // [版 本 号] ver0.0.1
 //====================================================================================================
@@ -57,22 +56,24 @@
     d3.CreatLine.prototype.yAixDrew = function(yMax){
         var yUnit = this.figureYunit(yMax);
         var oG = creatTage("g",{style:"cursor:pointer"});
-        var oLine = creatTage("line",{x1:"40",y1:"0",x2:"40",y2:yMax-30,stroke:"red"});
+        var oLine = creatTage("line",{x1:40,y1:0,x2:40,y2:yMax-30,stroke:"#c0d0e0"});
         oG.appendChild(oLine);
         for(var i=0;i<=5;i++){
             if(i == 0){
                 continue;
             }
             var oText =  creatTage("text",{x:20,y:yMax-yUnit.yDataUnit*i*yUnit.yFigureUnits -23,"font-size":"20",'text-anchor':'middle'});
+            var oLine1 = creatTage("line",{x1:40,y1:yMax-yUnit.yDataUnit*i*yUnit.yFigureUnits -30.5,x2:this.xMax,y2:yMax-yUnit.yDataUnit*i*yUnit.yFigureUnits -30.5,stroke:"#c0c0c0","stroke-width":1});
             oText.textContent = yUnit.yDataUnit*i;
             oG.appendChild(oText);
+            oG.appendChild(oLine1);
         }
         this.oSvg .appendChild(oG);
     }
     d3.CreatLine.prototype.xAixDrew = function(xMax){
         var xUnit = this.figureXunit(xMax);
         var oG = creatTage("g",{});
-        var oLine = creatTage("line",{x1:"40",y1:this.yMax-30,x2:this.xMax,y2:this.yMax-30,stroke:"red"});
+        var oLine = creatTage("line",{x1:"40",y1:this.yMax-30,x2:this.xMax,y2:this.yMax-30,stroke:"#c0d0e0"});
         oG.appendChild(oLine);
         if(this.settings.xTitle){
             for(var i=0;i<this.settings.data.length;i++){
@@ -81,31 +82,35 @@
                 oG.appendChild(oText);
             }
         }
-        var oText =  creatTage("text",{x:this.xMax-80,y:30,"font-size":"20",'text-anchor':'middle'});
+        var oText =  creatTage("text",{x:this.xMax-80,y:45,"font-size":"20",'text-anchor':'middle'});
         oText.textContent  = this.settings.type;
         oG.appendChild(oText);
         this.oSvg .appendChild(oG);
     }
     d3.CreatLine.prototype.polyLineDrew = function(){
-        var oPolyLine = creatTage('polyline',{'fill':'none','stroke':'red','stroke-width':'2'});
+        var oPolyLine = creatTage('polyline',{'fill':'rgba(155,198,239,0.3)','stroke':'#86898c','stroke-width':'1'});
         var piontsNum = "";
         var oCircleArr = [];
+        var lastPoint = "";
         this.oSvg .appendChild( oPolyLine );
         if(piontsNum == ""){
             piontsNum = 40 + "," + (this.yMax-this.settings.data[0].y*this.yFigureUnits - 30);
-            oCircle = creatTage('circle',{cursor:"move",dataX:this.settings.data[0].x,dataY:this.settings.data[0].y,cx:40,cy:(this.yMax-this.settings.data[0].y*this.yFigureUnits - 30),r:"5",'fill':'white','stroke':'red','stroke-width':'2'});
-            oCircle1 = creatTage('circle',{class:"circle",cursor:"move",dataX:this.settings.data[0].x,dataY:this.settings.data[0].y,cx:40,cy:(this.yMax-this.settings.data[0].y*this.yFigureUnits - 30),r:"50",'fill':'transparent','stroke':'tranprent','stroke-width':'0'});
+            oCircle = creatTage('circle',{cursor:"move",dataX:this.settings.data[0].x,dataY:this.settings.data[0].y,cx:40,cy:(this.yMax-this.settings.data[0].y*this.yFigureUnits - 30),r:"5",'fill':'#7cb5ec','stroke':'#86898c','stroke-width':'1'});
+            oCircle1 = creatTage('circle',{class:"circle",cursor:"move",dataX:this.settings.data[0].x,dataY:this.settings.data[0].y,cx:40,cy:(this.yMax-this.settings.data[0].y*this.yFigureUnits - 30),r:"20",'fill':'transparent','stroke':'tranprent','stroke-width':'0'});
             oCircleArr.push(oCircle);
             oCircleArr.push(oCircle1);
         }
         for(var i=1;i<this.settings.data.length;i++){
             piontsNum += "," + (i*this.xDataUnit+40) + "," + (this.yMax-this.settings.data[i].y*this.yFigureUnits - 30);
-            oCircle = creatTage('circle',{cursor:"move",dataX:this.settings.data[i].x,dataY:this.settings.data[i].y,cx:(i*this.xDataUnit+40),cy:(this.yMax-this.settings.data[i].y*this.yFigureUnits - 30),r:"5",'fill':'white','stroke':'red','stroke-width':'2'});
-            oCircle1 = creatTage('circle',{class:"circle",cursor:"move",dataX:this.settings.data[i].x,dataY:this.settings.data[i].y,cx:(i*this.xDataUnit+40),cy:(this.yMax-this.settings.data[i].y*this.yFigureUnits - 30),r:"50",'fill':'transparent','stroke':'transprent','stroke-width':'0'});
+            oCircle = creatTage('circle',{cursor:"move",dataX:this.settings.data[i].x,dataY:this.settings.data[i].y,cx:(i*this.xDataUnit+40),cy:(this.yMax-this.settings.data[i].y*this.yFigureUnits - 30),r:"5",'fill':'#7cb5ec','stroke':'#86898c','stroke-width':'2'});
+            oCircle1 = creatTage('circle',{class:"circle",cursor:"move",dataX:this.settings.data[i].x,dataY:this.settings.data[i].y,cx:(i*this.xDataUnit+40),cy:(this.yMax-this.settings.data[i].y*this.yFigureUnits - 30),r:"20",'fill':'transparent','stroke':'transprent','stroke-width':'0'});
             oCircleArr.push(oCircle);
             oCircleArr.push(oCircle1);
+            if(i == this.settings.data.length-1){
+                lastPoint = "," + (i*this.xDataUnit+40) + "," + (this.yMax - 30);
+            }
         }
-        oPolyLine.setAttribute("points",piontsNum);
+        oPolyLine.setAttribute("points","40," + (this.yMax - 30)+ "," + piontsNum + lastPoint);
         for(var j=0;j<oCircleArr.length;j++){
             this.oSvg .appendChild( oCircleArr[j] );
         }
