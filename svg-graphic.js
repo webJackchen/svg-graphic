@@ -14,7 +14,11 @@
         this.oParent = null,
             this.settings = {
                 type:"甲醛",
-                xTitle:false,
+                xTitleShow:false,
+                yTextHide:false,
+                yLineHide:false,
+                xTextFontSise:20,
+                textColor:"#000",
                 data:[{x:"周一",y:12},{x:"周二",y:15},{x:"周三",y:9},{x:"周四",y:76},{x:"周五",y:35},{x:"周六",y:30},{x:"周天",y:42}]
             }
     }
@@ -57,15 +61,20 @@
         var yUnit = this.figureYunit(yMax);
         var oG = creatTage("g",{style:"cursor:pointer"});
         var oLine = creatTage("line",{x1:40,y1:0,x2:40,y2:yMax-30,stroke:"#c0d0e0"});
-        oG.appendChild(oLine);
+        var xEnd = this.settings.yLineHide ? this.xMax-40:this.xMax;
+        if(this.settings.yLineHide == false){
+            oG.appendChild(oLine);
+        }
         for(var i=0;i<=5;i++){
             if(i == 0){
                 continue;
             }
-            var oText =  creatTage("text",{x:20,y:yMax-yUnit.yDataUnit*i*yUnit.yFigureUnits -23,"font-size":"20",'text-anchor':'middle'});
-            var oLine1 = creatTage("line",{x1:40,y1:yMax-yUnit.yDataUnit*i*yUnit.yFigureUnits -30.5,x2:this.xMax,y2:yMax-yUnit.yDataUnit*i*yUnit.yFigureUnits -30.5,stroke:"#c0c0c0","stroke-width":1});
+            var oText =  creatTage("text",{x:20,y:yMax-yUnit.yDataUnit*i*yUnit.yFigureUnits -23,"font-size":"20",'text-anchor':'middle',"fill":this.settings.textColor});
+            var oLine1 = creatTage("line",{x1:40,y1:yMax-yUnit.yDataUnit*i*yUnit.yFigureUnits -30.5,x2:xEnd,y2:yMax-yUnit.yDataUnit*i*yUnit.yFigureUnits -30.5,stroke:"#c0c0c0","stroke-width":1});
             oText.textContent = yUnit.yDataUnit*i;
-            oG.appendChild(oText);
+            if(this.settings.yTextHide == false){
+                oG.appendChild(oText);
+            }
             oG.appendChild(oLine1);
         }
         this.oSvg .appendChild(oG);
@@ -75,20 +84,21 @@
         var oG = creatTage("g",{});
         var oLine = creatTage("line",{x1:"40",y1:this.yMax-30,x2:this.xMax,y2:this.yMax-30,stroke:"#c0d0e0"});
         oG.appendChild(oLine);
-        if(this.settings.xTitle){
+        if(this.settings.xTitleShow){
             for(var i=0;i<this.settings.data.length;i++){
-                var oText =  creatTage("text",{x:i*xUnit.xDataUnit+40,y:this.yMax-10,"font-size":"20",'text-anchor':'middle'});
+                var oText =  creatTage("text",{x:i*xUnit.xDataUnit+40,y:this.yMax-10,"font-size":this.settings.xTextFontSise,'text-anchor':'middle',"fill":this.settings.textColor});
                 oText.textContent = this.settings.data[i].x;
                 oG.appendChild(oText);
             }
         }
-        var oText =  creatTage("text",{x:this.xMax-80,y:45,"font-size":"20",'text-anchor':'middle'});
+        var oText =  creatTage("text",{x:this.xMax-80,y:45,"font-size":"20",'text-anchor':'middle',"fill":this.settings.textColor});
         oText.textContent  = this.settings.type;
         oG.appendChild(oText);
         this.oSvg .appendChild(oG);
     }
     d3.CreatLine.prototype.polyLineDrew = function(){
-        var oPolyLine = creatTage('polyline',{'fill':'rgba(155,198,239,0.3)','stroke':'#86898c','stroke-width':'1'});
+        //var oPolyLine = creatTage('polyline',{'fill':'rgba(155,198,239,0.3)','stroke':'#86898c','stroke-width':'1'});
+        var oPolyLine = creatTage('polyline',{'fill':'rgba(155,198,239,0.3)','stroke':'#fff','stroke-width':'1'});
         var piontsNum = "";
         var oCircleArr = [];
         var lastPoint = "";
